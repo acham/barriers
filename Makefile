@@ -1,29 +1,18 @@
-CC=mpicc
+CC=gcc
 CFLAGS=-I.  -Wall -g
-# COMMON_DEPS =  utils.o ipclib.h utils.h
-# CLIENT_DEPS = ipclib.o  
-OBJ = server.o client.o 
-LIBS= -lm -lpthread
+OMPFLAGS = -fopenmp
+OMPLIBS = -lgomp
+OMP_DEPS = ompSenseBarr.h ompTreeBarr.h
 
-%.o: %.c 
-	$(CC) -c -o $@ $< $(CFLAGS)
+ompSenseBarr.o: ompSenseBarr.c
+	$(CC) -c $(CFLAGS) $< -o $@
 
-server: server.o $(COMMON_DEPS)
-	gcc -o $@ $^ $(CFLAGS) $(LIBS)
+ompTest: ompSenseBarr.o ompTest.c
+	gcc -o $@ $^ $(CFLAGS) $(OMPFLAGS) $(OMPLIBS)
 
-client: client.o $(CLIENT_DEPS) $(COMMON_DEPS)
-	gcc -o $@ $^ $(CFLAGS) $(LIBS)
-
-async_client: async_client.o $(CLIENT_DEPS) $(COMMON_DEPS)
-	gcc -o $@ $^ $(CFLAGS) $(LIBS)
-
-test_sync_async_client: test_sync_async_client.o $(CLIENT_DEPS) $(COMMON_DEPS)
-	gcc -o $@ $^ $(CFLAGS) $(LIBS)
-
-
-all: server client async_client test_sync_async_client
+all: ompSenseBarr.o ompTest
 
 .PHONY: clean
 
 clean :
-	rm *.o server client async_client  test_sync_async_client client00* server.log
+	rm *.o 

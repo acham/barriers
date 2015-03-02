@@ -5,6 +5,11 @@
 #include <stdlib.h>
 #include <omp.h>
 
+extern int sense;
+extern int next_sense_target;
+extern int count;
+extern int num_threads;
 
+void senseBarrier();
 
 #endif
