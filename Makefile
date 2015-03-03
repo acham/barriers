@@ -4,8 +4,8 @@ OMPFLAGS = -fopenmp
 OMPLIBS = -lgomp
 OMP_DEPS = ompSenseBarr.h ompTreeBarr.h
 
-ompSenseBarr.o: ompSenseBarr.c
-	$(CC) -c $(CFLAGS) $< -o $@
+%Barr.o: %Barr.c
+	$(CC) -c $(CFLAGS) $(OMPFLAGS) $< -o $@
 
 ompTest: ompSenseBarr.o ompTest.c
 	gcc -o $@ $^ $(CFLAGS) $(OMPFLAGS) $(OMPLIBS)
