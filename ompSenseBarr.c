@@ -27,6 +27,8 @@ void ompSenseBarrier()
     //count = num_threads;
 }
 
+/* Help function */
+
 void initialize_sense_barr()
 {
     sense = 0;

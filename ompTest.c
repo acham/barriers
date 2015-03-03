@@ -12,10 +12,12 @@ int main(int argc, char **argv)
   omp_set_dynamic(0);
   //Error checking and set num threads from cmd line argument
   if (argc != 3){
-      fprintf(stderr, "Error. Usage: ompTest [num-threads] [barrier-type]\n");
+      fprintf(stderr, "Error. Usage: ompTest [num-threads] [barrier-type]\n"
+                      " [barrier-type]: 0 = no barrier, 1 = sense-reversal barrier\n");
       exit(1);
   }
   int numT = atoi(argv[1]);
+  int barrType = atoi(argv[2]);
   if (numT < 1 || numT > 200){
       fprintf(stderr, "Error: number of threads must be between 1 and 200.\n");
       exit(1);
@@ -47,7 +49,9 @@ int main(int argc, char **argv)
   printf("Work completed for thread: %d\n", tid);
   //Print the final value of the shared variable, according to each thread
   long fin_val;
-  ompSenseBarrier();
+  if (barrType == 1){
+    ompSenseBarrier();
+  }
 #pragma omp critical
   fin_val = x;
   printf("final value of shared variable x according to thread %d: %ld\n", tid, fin_val);

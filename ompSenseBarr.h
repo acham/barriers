@@ -13,7 +13,7 @@ extern int num_threads;
 extern int initialized;
 
 void ompSenseBarrier();
-static void initialize_sense_barr();
 
+void initialize_sense_barr();
 
 #endif
