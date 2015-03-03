@@ -44,7 +44,7 @@ int main(int argc, char **argv)
     x += i;
   } //end work
   my_final_var = get_final_var();
-  printf("Work completed for process: %d with my_final_var = %d\n", myrank, my_final_var);
+  printf("[%d]: work completed, with my_final_var = %d\n", myrank, my_final_var);
 
   //First, call the barrier, with type defined by user as command-line argument
   if (barrType == 1)
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
   //Print the final value of the shared variable, according to each thread
   my_final_var = get_final_var();
   
-  printf("post-barrier value of my_final_var according to proc %d: %d\n", myrank, my_final_var);
+  printf("[%d]: post-barrier value of my_final_var: %d\n", myrank, my_final_var);
 
   MPI_Finalize();
   return 0;
