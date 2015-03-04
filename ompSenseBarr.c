@@ -3,8 +3,11 @@
 #include "ompSenseBarr.h"
 
 //assume the code below is executed in a parallel section
-int initialized = 0;
-int sense, next_sense_target, count, num_threads;
+static int initialized = 0;
+static int sense, next_sense_target, count, num_threads;
+
+//static function decl
+static void initialize_sense_barr();
 
 void ompSenseBarrier()
 {
@@ -29,7 +32,7 @@ void ompSenseBarrier()
 
 /* Help function */
 
-void initialize_sense_barr()
+static void initialize_sense_barr()
 {
     sense = 0;
     num_threads = omp_get_num_threads();

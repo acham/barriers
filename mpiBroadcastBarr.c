@@ -6,9 +6,9 @@
 
 //we are only letting sense be 1 or 2
 //sense will correspond to the message being sent during a certain phase by all procs, and then be switched
-int numtasks, rank;
-int final_var = 0;
-int sense = 0;
+static int numtasks, rank;
+static int final_var = 0;
+static int sense = 0;
 
 //static func declaration
 static void initialize_bcast_barr();

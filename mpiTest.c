@@ -6,7 +6,6 @@
 
 int main(int argc, char **argv)
 {
-  printf("\nTest program for MPI Barriers\n");
   int myrank;
   int i, j;
   long x;
