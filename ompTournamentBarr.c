@@ -16,11 +16,11 @@
 #define champion 3
 #define dropout 4
 int NUM_THREADS, NUM_BARRIERS;
-
 //assume the code below is executed in a parallel section
 int initialized = 0;
 int sense, next_sense_target, count, num_threads;
-
+int counter = 0;
+int rounds = 0;
 struct round_struct {
 	int role;
 	int vpid;
@@ -30,20 +30,15 @@ struct round_struct {
 };
 typedef struct round_struct round_struct;
 round_struct array[1000][100];
-extern int counter;
-extern int rounds ;
-
-//extern int sense;
-//this variable indicates the next sense value that will allow a pass-through
-//extern int count;
-extern int num_threads;
-extern int initialized;
 
 
+static void initialize_tournament_barr();
 
 
 void ompTournamentBarrier()
-{int vpid=0;
+{initialize_tournament_barr();
+
+  int vpid=0;
 		bool *sense;
 		bool temp = true;
 
@@ -96,11 +91,11 @@ void ompTournamentBarrier()
 
 /* Help function */
 
-void initialize_tournament_barr()
+static void initialize_tournament_barr()
 {
     sense = 0;
     num_threads = omp_get_num_threads();
-    initialized = 1;
+    rounds = ceil( log(NUM_THREADS)/log(2) );
 	bool x = false;
 
 		NUM_THREADS = 1;

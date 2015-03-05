@@ -3,6 +3,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include "ompSenseBarr.h"
+#include "ompTournamentBarr.h"   //wendy
+
 
 int main(int argc, char **argv)
 {
@@ -52,6 +54,10 @@ int main(int argc, char **argv)
   if (barrType == 1){
     ompSenseBarrier();
   }
+  if (barrType == 2){                            //wendy
+    ompTournamentBarrier();
+  }
+	
 #pragma omp critical
   fin_val = x;
   printf("final value of shared variable x according to thread %d: %ld\n", tid, fin_val);
