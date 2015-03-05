@@ -32,7 +32,7 @@ typedef struct round_struct round_struct;
 round_struct array[1000][100];
 
 
-static void initialize_tournament_barr();
+void initialize_tournament_barr();
 
 
 void ompTournamentBarrier()
@@ -91,7 +91,7 @@ void ompTournamentBarrier()
 
 /* Help function */
 
-static void initialize_tournament_barr()
+ void initialize_tournament_barr()
 {
     sense = 0;
     num_threads = omp_get_num_threads();

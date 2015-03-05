@@ -9,6 +9,6 @@
 
 void ompTournamentBarrier();
 
-static void initialize_tournament_barr();
+void initialize_tournament_barr();
 
 #endif
