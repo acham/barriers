@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-I.  -Wall -g
 OMPFLAGS = -fopenmp
 OMPLIBS = -lgomp
-OMP_DEPS = ompSenseBarr.h ompTreeBarr.h ompTournamentBarr.h
+OMP_DEPS = ompSenseBarr.h ompTournamentBarr.h
 
 
 ompSenseBarr.o: ompSenseBarr.c
