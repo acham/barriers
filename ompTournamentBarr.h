@@ -7,8 +7,8 @@
 
 //sense variable. can be only 0 or 1.
 
-void ompTournamentBarrier();
+ void ompTournamentBarrier();
 
-void initialize_tournament_barr();
+static void initialize_tournament_barr();
 
 #endif

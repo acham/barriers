@@ -13,15 +13,15 @@
 #define bye 2
 #define champion 3
 #define dropout 4
-int NUM_THREADS;
+static int NUM_THREADS;
 
-int num_threads;
-bool sense;
-bool initialized = 0;
-int vpid;
-int rounds = 0;
+static int num_threads;
+static bool sense;
+static bool initialized = 0;
 
-struct round_struct {
+static int rounds = 0;
+
+static struct round_struct {
 	int role;
 	int vpid;
 	int tb_round;
@@ -29,10 +29,10 @@ struct round_struct {
 	bool flag;
 };
 typedef struct round_struct round_struct;
-round_struct array[32][5];
+static round_struct array[32][5];
 
 
-void initialize_tournament_barr();
+static void initialize_tournament_barr();
 
 
 void ompTournamentBarrier()
@@ -40,15 +40,14 @@ void ompTournamentBarrier()
     if (initialized = 0 ) 
         initialize_tournament_barr();
 
-    int vpid=0;
-    bool sense;
- 
+    int vpid= omp_get_thread_num();
+
 
 
 	int round = 0;
-
-	while(1) {
-
+	
+	for ( round = 0 ; round < rounds; round++ )
+	{
 		if(array[vpid][round].role == loser){
 			*( array[vpid][round] ).opponent = sense;
 			while( array[vpid][round].flag != sense );
@@ -68,13 +67,12 @@ void ompTournamentBarrier()
 			break;
 		}
 
-		if(round < rounds)
-			round = round + 1;
 		//i=1;
 	}
 
 	//wake up
-	while(1) {
+	for (round = rounds - 1; round >= 0; round--)
+	{
 		if( round > 0 )
 			round = round - 1;
 
@@ -91,9 +89,9 @@ void ompTournamentBarrier()
 
 /* Help function */
 
- void initialize_tournament_barr()
+ static void initialize_tournament_barr()
 { 
-   vpid = omp_get_thread_num();
+   //vpid = omp_get_thread_num();
     sense = true;
 
     NUM_THREADS = omp_get_num_threads();
