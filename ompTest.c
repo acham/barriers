@@ -15,7 +15,7 @@ int main(int argc, char **argv)
   //Error checking and set num threads from cmd line argument
   if (argc != 3){
       fprintf(stderr, "Error. Usage: ompTest [num-threads] [barrier-type]\n"
-                      " [barrier-type]: 0 = no barrier, 1 = sense-reversal barrier\n");
+                      " [barrier-type]: 0 = no barrier, 1 = sense-reversal barrier, 2 = tournament barrier\n");   //wendy
       exit(1);
   }
   int numT = atoi(argv[1]);
