@@ -10,9 +10,8 @@
 #include <unistd.h>
 #define winner 0
 #define loser 1
-#define bye 2
-#define champion 3
-#define dropout 4
+#define champion 2
+
 static int NUM_THREADS;
 
 static bool sense;
@@ -25,7 +24,7 @@ typedef struct _round_struct {
 	int vpid;
 	//int tb_round;
 	//bool opponent;
-	int opponent;
+	//int opponent;
 	bool flag;
 } round_struct;
 
@@ -39,13 +38,15 @@ void ompTournamentBarrier()
         initialize_tournament_barr();
     
     int vpid= omp_get_thread_num();
-        /*
+        
 	int round = 0;
-	
+	int com, com_second=0;
 	for ( round = 0 ; round < rounds; round++ )
 	{
+		com = ceil( pow(2,round) );
+	        com_second = ceil( pow(2,round-1) );
 		if(array[vpid][round].role == loser){
-			( array[vpid][round] ).opponent = sense;
+			( array[vpid+com_second][round] ).flag = sense;
 			while( array[vpid][round].flag != sense );
 			
 			break;
@@ -57,9 +58,9 @@ void ompTournamentBarrier()
 		}
 
 		if( array[vpid][round].role == champion ){
-                        fprintf(stderr, "this is champion.\n");
+                        
 			while( array[vpid][round].flag != sense );
-			*( array[vpid][round] ).opponent = sense;
+		         array[vpid+com_second][round].flag = sense;
 			break;
 		}
 
@@ -69,18 +70,16 @@ void ompTournamentBarrier()
 	//wake up
 	for (round = rounds - 1; round >= 0; round--)
 	{
-		if( round > 0 )
-			round = round - 1;
+		
 
 		if( array[vpid][round].role == winner )
-			*( array[vpid][round] ).opponent = sense;
-			
-		if( array[vpid][round].role == dropout )
+			( array[vpid+round][round] ).flag = sense;
 			break;
+		
 	}
 
 	sense = !sense;
-    */
+    
 }
 
 /* Help function */
@@ -105,7 +104,7 @@ void ompTournamentBarrier()
 		for(k=0;k<=rounds;k++) {
 			array[j][k].flag = false;
 			array[j][k].role = -1;
-			array[j][k].opponent = -1;
+			//array[j][k].opponent = -1;
             //array[j][k].opponent = false;
 		}
 	}
@@ -117,7 +116,7 @@ void ompTournamentBarrier()
 			comp = ceil( pow(2,k) );
 			comp_second = ceil( pow(2,k-1) );
 
-			if((k > 0) && (l%comp==0) && ((l + (comp_second))< NUM_THREADS) && (comp < NUM_THREADS)){
+			if((k > 0) && (l%comp==0) && (comp < NUM_THREADS)){
 				array[l][k].role = winner;
 			}
 
@@ -126,27 +125,11 @@ void ompTournamentBarrier()
 				array[l][k].role = loser;
 			}
 
-            /*
+           
 			if((k > 0) && (l==0) && (comp >= NUM_THREADS)){
 				array[l][k].role = champion;
 			}
 
-			if((k > 0) && (l%comp == 0) && ((l + comp_second)) >= NUM_THREADS){
-				array[l][k].role = bye;
-			}
-
-			if(k==0) {
-				array[l][k].role = dropout;
-			}
-            
-			if(array[l][k].role == loser) {
-				array[l][k].opponent = &array[l-comp_second][k].flag;
-			}
-
-			if(array[l][k].role == winner || array[l][k].role == champion) {
-				array[l][k].opponent = &array[l+comp_second][k].flag;
-			}
-            */
 		}
 	}
 
