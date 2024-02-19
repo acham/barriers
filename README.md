@@ -1,3 +1,2 @@
 # barriers
-
-aos proj2
+Implementation of various types of MPI and OpenMP barriers

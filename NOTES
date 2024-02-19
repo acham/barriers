@@ -1,6 +1,0 @@
-Use random work loads be thread/process to check functionality.
-However, use consistent work loads to measure performance.
-
-For Tournament Barrier, test accepts only powers of 2.
-
-
